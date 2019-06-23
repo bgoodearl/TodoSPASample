@@ -92,3 +92,43 @@ With Angular CLI v7.3.8 installed globally, and version specified in package.jso
 ```cmd
 ng update @angular/cli@7.3.8
 ```
+Updated `@angular/cli` in `package.json`.
+
+```cmd
+ng update @angular/core@7.2.15
+```
+updated multiple packages in `package.json`.
+
+```cmd
+ng update
+```
+got
+```txt
+    We analyzed your package.json, there are some packages to update:
+
+      Name                                      Version                  Command to update
+     ---------------------------------------------------------------------------------------
+      @angular/cli                              7.3.9 -> 8.0.3           ng update @angular/cli
+      @angular/core                             7.2.15 -> 8.0.2          ng update @angular/core
+      @nguniversal/aspnetcore-engine            6.0.0 -> 7.1.1           ng update @nguniversal/aspnetcore-engine
+
+
+    There might be additional packages that are outdated.
+    Run "ng update --all" to try to update all at the same time.
+```
+
+Compiled and ran and app runs successfully.
+
+## Resources
+
+See the following pages for additional resources
+
+[Developer Tool Notes](./_docs/TSS_DevToolNotes.md)
+
+[Azure Active Directory Resources](./_docs/AzureADResources.md)
+
+Additional resources: [Resources](./_docs/TSS_Resources.md)
+
+## Dev Notes
+
+[Developer Notes](./_docs/TSS_DevNotes.md)
