@@ -155,6 +155,262 @@ Got:
 [{"id":1,"name":"Item1","isComplete":false}]
 ```
 
+## Todo Angular UI
+
+Adapted code from `\microsoft-authentication-library-for-js\lib\msal-angular\samples\MSALAngularDemoApp\src\todo-list`
+so it could be used with the API sample.
+
+### New Files
+
+File in src\app\common
+```txt
+HttpServiceHelper.ts
+```
+Files in src\todo-list:
+```txt
+todo-list.component.css
+todo-list.component.html
+todo-list.component.spec.ts
+todo-list.component.ts
+todo-list.service.ts
+todoList.ts
+```
+
+### Changes in todo-list files
+The object model of the C# Web API sample uses the property `Name` where the demo sample code for the MSAL demo uses the property `Title`.
+
+Changes from sample repo:
+
+#### HttpServiceHelper.ts
+
+```TypeScript
+import {Observable} from 'rxjs/Rx'
+import {HttpClient} from "@angular/common/http";
+import {Injectable} from "@angular/core";
+
+@Injectable()
+export class HttpServiceHelper {
+
+  constructor(private http: HttpClient) {
+  }
+
+  public httpGetRequest(url : string) {
+    return this.http.get(url)
+      .map(response => {
+        return response;
+      })
+      .catch(response => (Observable.throw(response)
+      ))
+  }
+
+}
+```
+to
+```TypeScript
+import { Observable } from 'rxjs';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { map, catchError } from 'rxjs/operators';
+
+@Injectable()
+export class HttpServiceHelper {
+
+  constructor(private http: HttpClient) {
+  }
+
+  public httpGetRequest(url : string) {
+    return this.http.get(url)
+      .pipe(map(response => {
+        console.log("http response");
+        return response;
+      }),
+      catchError(response => (Observable.throw(response)
+      )))
+  }
+
+}
+```
+
+#### todo-list.component.html
+```html
+        <td>{{item?.title}}</td>
+```
+changed to
+```html
+        <td>{{item?.name}}</td>
+```
+
+#### todo-list.component.ts
+
+Updates to rxjs, commented out msal related code for now.
+```TypeScript
+import {Subscription} from "rxjs/Subscription";
+import {BroadcastService} from "@azure/msal-angular";
+import { MsalService} from "@azure/msal-angular";
+```
+to
+```TypeScript
+import {Subscription} from "rxjs";
+//import {BroadcastService} from "@azure/msal-angular";
+//import { MsalService} from "@azure/msal-angular";
+```
+...
+```TypeScript
+  constructor(private todoListService: TodoListService, private broadcastService : BroadcastService, private msalService: MsalService) { }
+```
+to
+```TypeScript
+  constructor(private todoListService: TodoListService) { } //, private broadcastService : BroadcastService, private msalService: MsalService) { }
+```
+...
+```TypeScript
+        'title': this.newTodoCaption,
+```
+to
+```TypeScript
+        'name': this.newTodoCaption,
+```
+
+And commented out lines 26-19, 38-41, 44-46 and 80.
+
+#### todo-list.service.ts:
+```TypeScript
+import {Injectable} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs/Rx";
+import {TodoList} from "./todoList";
+
+@Injectable()
+export class TodoListService {
+
+  private apiEndpoint: string = "https://buildtodoservice.azurewebsites.net/api/todolist";
+
+  constructor(private http: HttpClient) {
+
+  }
+
+  getItems(): Observable<TodoList[]> {
+    return this.http.get(this.apiEndpoint)
+      .map((response: Response) =>
+        response
+      )
+      .catch(response => (Observable.throw(response)
+      ))
+  }
+
+  postItem(item: any) {
+    return this.http.post(this.apiEndpoint, item, {responseType: 'text'})
+      .map((response) => {
+        return response;
+      })
+  }
+
+}
+```
+to
+```TypeScript
+import {Injectable} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs";
+import {TodoList} from "./todoList";
+import { map, catchError } from 'rxjs/operators';
+
+@Injectable()
+export class TodoListService {
+
+  private apiEndpoint: string = "https://localhost:44358/api/todo";
+
+  constructor(private http: HttpClient) {
+
+  }
+
+  getItems(): Observable<TodoList[]> {
+    return this.http.get(this.apiEndpoint)
+      .pipe(map((response: TodoList[]) => response
+      ),
+        catchError(response => (Observable.throw(response))))
+  }
+
+  postItem(item: any) {
+    return this.http.post(this.apiEndpoint, item, {responseType: 'text'})
+      .pipe(map((response) => {
+        return response;
+      }))
+  }
+
+}
+```
+
+#### todoList.ts:
+```TypeScript
+export class TodoList {
+
+  constructor(title:string, owner: string) {
+    this.title=title;
+    this.owner= owner;
+  }
+
+  title:string;
+  owner: string;
+
+}
+```
+to
+```TypeScript
+export class TodoList {
+
+  constructor(name:string, owner: string) {
+    this.name = name;
+    this.owner= owner;
+  }
+
+  name:string;
+  owner: string;
+
+}
+```
+
+### Changes in existing files
+
+#### nav-menu.component.html
+Added the following as a new `li`:
+```html
+          <li class="nav-item" [routerLinkActive]='["link-active"]'>
+            <a class="nav-link text-dark" [routerLink]='["/todo-list"]'>Todo List</a>
+          </li>
+```
+
+#### app.module.ts
+
+Added imports:
+```TypeScript
+import { TodoListComponent } from "./todo-list/todo-list.component";
+import { TodoListService } from "./todo-list/todo-list.service";
+```
+Changed declarations:
+```TypeScript
+    FetchDataComponent
+```
+to
+```TypeScript
+    FetchDataComponent,
+    TodoListComponent
+```
+added to RouterModule.forRoot:
+```TypeScript
+      { path: 'todo-list', component: TodoListComponent },
+```
+changed providers:
+```TypeScript
+  providers: [],
+```
+to
+```TypeScript
+  providers: [TodoListService],
+```
+
+
+
 ## Resources
 
 See the following pages for additional resources

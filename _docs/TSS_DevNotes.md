@@ -14,6 +14,7 @@
 			Added readme.<br/>
 			Updated to Angular CLI 7.3.8 and Angular Core 7.2.15.<br/>
 			Added Todo Web API.<br/>
+			Adapted Angular UI from old MSAL sample.<br/>
 		</td>
     </tr>
 </table>
