@@ -10,7 +10,7 @@
         <td>6/25/2019</td><td>bg</td>
 		<td>
 			Added [Authorize] and User check to TodoController.
-			Added [Authorize] (commented out) and User check to 
+			Added [Authorize] (commented out) and User check to SampleDataController.<br/>
 		</td>
     </tr>
     <tr>
