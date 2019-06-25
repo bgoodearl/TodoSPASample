@@ -2,8 +2,9 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {TodoListService} from "./todo-list.service";
 import {TodoList} from "./todoList";
 import {Subscription} from "rxjs";
-//import {BroadcastService} from "@azure/msal-angular";
-//import { MsalService} from "@azure/msal-angular";
+import {BroadcastService} from "@azure/msal-angular";
+import { MsalService } from "@azure/msal-angular";
+import { AUTH_CONFIG } from "../shared/auth/authconfig";
 
 @Component({
   selector: 'app-todo-list',
@@ -18,15 +19,16 @@ export class TodoListComponent implements OnInit, OnDestroy  {
   public newTodoCaption = "";
   private submitted = false;
 private subscription: Subscription;
-  constructor(private todoListService: TodoListService) { } //, private broadcastService : BroadcastService, private msalService: MsalService) { }
+  constructor(private todoListService: TodoListService, private broadcastService : BroadcastService, private msalService: MsalService) { }
 
   ngOnInit() {
     this.populate();
 
-    //this.subscription = this.broadcastService.subscribe("msal:acquireTokenFailure", (payload) => {
-    //  console.log("acquire token failure " + JSON.stringify(payload));
-    //  if (payload.indexOf("consent_required") !== -1 || payload.indexOf("interaction_required") != -1 ) {
-    //    this.msalService.acquireTokenPopup(['api://a88bb933-319c-41b5-9f04-eff36d985612/access_as_user']).then( (token) => {
+    this.subscription = this.broadcastService.subscribe("msal:acquireTokenFailure", (payload) => {
+      console.log("acquire token failure " + JSON.stringify(payload));
+      if (payload.indexOf("consent_required") !== -1 || payload.indexOf("interaction_required") != -1) {
+        let scopeUri: string = AUTH_CONFIG.apiAsUserScope;
+        this.msalService.acquireTokenPopup([scopeUri]).then( (token) => {
           this.todoListService.getItems().subscribe( (results) => {
             this.error = '';
             this.todoList = results;
@@ -35,15 +37,15 @@ private subscription: Subscription;
             this.error = err;
             this.loadingMessage = "";
           });
-   //     },  (error) => {
-   //     });
-   //   }
-   // });
+        },  (error) => {
+        });
+      }
+    });
 
 
-   //this.subscription = this.broadcastService.subscribe("msal:acquireTokenSuccess", (payload) => {
-   //   console.log("acquire token success");
-   // });
+   this.subscription = this.broadcastService.subscribe("msal:acquireTokenSuccess", (payload) => {
+      console.log("acquire token success");
+    });
   }
 
   public populate() {
@@ -77,7 +79,7 @@ private subscription: Subscription;
 
 //extremely important to unsubscribe
   ngOnDestroy() {
-    //this.broadcastService.getMSALSubject().next(1);
+   this.broadcastService.getMSALSubject().next(1);
    if(this.subscription) {
       this.subscription.unsubscribe();
     }

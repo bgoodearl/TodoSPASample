@@ -10,6 +10,11 @@ This document contains links to Azure Active Directory and related auth resource
 [MSAL for JavaScript](https://github.com/AzureAD/microsoft-authentication-library-for-js)
 (c. 2017, updated extensively June 2019)
 
+### Issues
+
+[Code sample will need updating due to changes in using the login.microsoftonline.com/common endpoint](https://github.com/MicrosoftDocs/azure-docs/issues/19646)
+(c. Nov 2018)
+
 ### Azure Active Directory Application Registration
 
 [Quickstart: Register an application with the Microsoft identity platform](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app)

@@ -35,6 +35,10 @@
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
+                },
+                {
+                  "replace": "src/app/shared/auth/authconfig.ts",
+                  "with": "src/app-alt/shared/auth/authconfig-prod.ts"
                 }
               ],
               "optimization": true,
@@ -46,6 +50,14 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true
+            },
+            "dev-local": {
+              "fileReplacements": [
+                {
+                  "replace": "src/app/shared/auth/authconfig.ts",
+                  "with": "src/app-alt/shared/auth/authconfig-dev-local.ts"
+                }
+              ]
             }
           }
         },

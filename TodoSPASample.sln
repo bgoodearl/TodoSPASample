@@ -14,6 +14,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		_docs\TSS_Resources.md = _docs\TSS_Resources.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_initialSetup", "_initialSetup", "{7420D12B-0F1C-493C-B8B0-790E4978FF4B}"
+	ProjectSection(SolutionItems) = preProject
+		_initialSetup\_initialSetupReadme.md = _initialSetup\_initialSetupReadme.md
+		_initialSetup\alt-auth\authconfig-dev-local.ts = _initialSetup\alt-auth\authconfig-dev-local.ts
+		_initialSetup\alt-auth\authconfig-prod.ts = _initialSetup\alt-auth\authconfig-prod.ts
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
