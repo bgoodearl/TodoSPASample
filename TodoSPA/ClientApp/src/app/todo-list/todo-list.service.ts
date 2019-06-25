@@ -6,14 +6,16 @@ import { map, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class TodoListService {
+  static VER: string = "1.01";
 
   private apiEndpoint: string = "https://localhost:44358/api/todo";
 
   constructor(private http: HttpClient) {
-
+    console.log("todoListSvc constructor v=" + TodoListService.VER);
   }
 
   getItems(): Observable<TodoList[]> {
+    console.log("todoListSvc getItems");
     return this.http.get(this.apiEndpoint)
       .pipe(map((response: TodoList[]) => response
       ),

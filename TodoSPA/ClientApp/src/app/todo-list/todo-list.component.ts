@@ -12,20 +12,25 @@ import { AUTH_CONFIG } from "../shared/auth/authconfig";
   styleUrls: ['./todo-list.component.css']
 })
 export class TodoListComponent implements OnInit, OnDestroy  {
+  static VER: string = "1.01";
 
- private error = "";
+  private error = "";
   public loadingMessage = "Loading...";
    todoList: TodoList[];
   public newTodoCaption = "";
   private submitted = false;
-private subscription: Subscription;
+  private tokenFailureSubscription: Subscription;
+  private tokenSuccessSubscription: Subscription;
+
   constructor(private todoListService: TodoListService, private broadcastService : BroadcastService, private msalService: MsalService) { }
 
   ngOnInit() {
+    console.log("todoList component OnInit v=" + TodoListComponent.VER);
+
     this.populate();
 
-    this.subscription = this.broadcastService.subscribe("msal:acquireTokenFailure", (payload) => {
-      console.log("acquire token failure " + JSON.stringify(payload));
+    this.tokenFailureSubscription = this.broadcastService.subscribe("msal:acquireTokenFailure", (payload) => {
+      console.log("todoList acquire token failure " + JSON.stringify(payload));
       if (payload.indexOf("consent_required") !== -1 || payload.indexOf("interaction_required") != -1) {
         let scopeUri: string = AUTH_CONFIG.apiAsUserScope;
         this.msalService.acquireTokenPopup([scopeUri]).then( (token) => {
@@ -41,10 +46,8 @@ private subscription: Subscription;
         });
       }
     });
-
-
-   this.subscription = this.broadcastService.subscribe("msal:acquireTokenSuccess", (payload) => {
-      console.log("acquire token success");
+    this.tokenSuccessSubscription = this.broadcastService.subscribe("msal:acquireTokenSuccess", (payload) => {
+      console.log("todoList acquire token success " + JSON.stringify(payload));
     });
   }
 
@@ -53,7 +56,7 @@ private subscription: Subscription;
       this.todoList = result;
       this.loadingMessage = "";
     }, error => {
-      console.log("access token silent failed");
+        console.log("todoList populate failed");
       this.error = error;
       this.loadingMessage = "";
     });
@@ -79,9 +82,13 @@ private subscription: Subscription;
 
 //extremely important to unsubscribe
   ngOnDestroy() {
-   this.broadcastService.getMSALSubject().next(1);
-   if(this.subscription) {
-      this.subscription.unsubscribe();
+    console.log("todoList component OnDestroy");
+    this.broadcastService.getMSALSubject().next(1);
+    if(this.tokenFailureSubscription) {
+      this.tokenFailureSubscription.unsubscribe();
+    }
+    if (this.tokenSuccessSubscription) {
+      this.tokenSuccessSubscription.unsubscribe();
     }
   }
 }
