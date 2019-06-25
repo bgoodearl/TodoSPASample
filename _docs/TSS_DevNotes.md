@@ -13,6 +13,7 @@
 			Added [Authorize] (commented out) and User check to SampleDataController.<br/>
 			Added Logout button to menu.<br/>
 			Use login popup.<br/>
+			Tweaked logging for todo-list.<br/>
 		</td>
     </tr>
     <tr>
