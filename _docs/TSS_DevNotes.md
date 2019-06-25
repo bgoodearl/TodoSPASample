@@ -7,6 +7,13 @@
         <th>Notes</th>
     </tr>
     <tr>
+        <td>6/25/2019</td><td>bg</td>
+		<td>
+			Added [Authorize] and User check to TodoController.
+			Added [Authorize] (commented out) and User check to 
+		</td>
+    </tr>
+    <tr>
         <td>6/24/2019</td><td>bg</td>
 		<td>
 			Added template for MSAL configuration settings.<br/>

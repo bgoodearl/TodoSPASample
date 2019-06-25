@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using TodoSPA.Models;
 
 namespace TodoSPA.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TodoController : ControllerBase
@@ -31,6 +33,16 @@ namespace TodoSPA.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TodoItem>>> GetTodoItems()
         {
+#if DEBUG
+            //Check for User (should be guaranteed if [Authorize] present
+            if ((this.User != null) && (this.User.Identity != null))
+            {
+                if (User.Identity.IsAuthenticated)
+                {
+
+                }
+            }
+#endif
             return await _context.TodoItems.ToListAsync();
         }
 
