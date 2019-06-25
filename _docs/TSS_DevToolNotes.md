@@ -1,6 +1,14 @@
 #  .NET Core 2.2 Angular 7 Sample - Notes on Developer Tools
 
+## Visual Studio
+
 [Visual Studio (2019)](https://visualstudio.microsoft.com/vs/)
+
+### Visual Studio Extensions
+
+[Open Command Line (GitHub)](https://github.com/madskristensen/OpenCommandLine)
+
+[Open Command Line VS Extension](http://vsixgallery.com/extension/f4ab1e64-5d35-4f06-bad9-bf414f4b3bbb/)
 
 ## Angular
 
