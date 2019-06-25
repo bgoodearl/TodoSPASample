@@ -48,7 +48,7 @@ export const protectedResourceMap: [string, string[]][] = [[AUTH_CONFIG.todoApiR
       cacheLocation: AUTH_CONFIG.cacheLocation,
       postLogoutRedirectUri: AUTH_CONFIG.appPostLogoutRedirectUri,
       navigateToLoginRequestUrl: true,
-      popUp: false,
+      popUp: true,
       consentScopes: ["user.read", AUTH_CONFIG.apiAsUserScope],
       unprotectedResources: ["https://www.microsoft.com/en-us/"],
       protectedResourceMap: protectedResourceMap,

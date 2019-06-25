@@ -12,6 +12,7 @@
 			Added [Authorize] and User check to TodoController.
 			Added [Authorize] (commented out) and User check to SampleDataController.<br/>
 			Added Logout button to menu.<br/>
+			Use login popup.<br/>
 		</td>
     </tr>
     <tr>
