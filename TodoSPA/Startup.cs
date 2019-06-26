@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Identity.Web;
+using Microsoft.Identity.Web.Client.TokenCacheProviders;
 using TodoSPA.Models;
 
 namespace TodoSPA
@@ -22,6 +24,13 @@ namespace TodoSPA
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddProtectWebApiWithMicrosoftIdentityPlatformV2(Configuration)
+                    .AddProtectedApiCallsWebApis(Configuration)
+                    .AddInMemoryTokenCaches();
+
+            //**** NOTE: BE VERY CAREFUL ABOUT ENABILING ShowPII!!!
+            //Microsoft.IdentityModel.Logging.IdentityModelEventSource.ShowPII = true; //**** FOR DIAGNOSTICS ONLY!
+
             services.AddDbContext<TodoContext>(opt =>
                 opt.UseInMemoryDatabase("TodoList"));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -48,6 +57,7 @@ namespace TodoSPA
             }
 
             app.UseHttpsRedirection();
+            app.UseAuthentication();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 

@@ -4,6 +4,20 @@ This repo contains a sample application created with Visual Studio 2019 using .N
 
 The Web API for the application comes from the [JavaScript Single Page Application with an ASP.NET backend, using msal.js](https://github.com/Azure-Samples/active-directory-javascript-singlepageapp-dotnet-webapi-v2).
 
+## Initial Setup
+
+**IMPORTANT**
+
+If you don't already have it, I highly recommend Mads Kristensen's [Open Command Line Visual Studio Extension](http://vsixgallery.com/extension/f4ab1e64-5d35-4f06-bad9-bf414f4b3bbb/), which I use to open a command line for all of the work done in building this sample.
+
+See [_initialSetup/_initialSetupReadme.md](./_initialSetup/_initialSetupReadme.md) and follow the instructions there to copy the files `authconfig-dev-local.ts` and `authconfig-prod.ts` from `_initialSetup\alt-auth` in the root of this solution to
+`TodoSPA\ClientApp\src\app-alt\shared\auth`.
+
+You will see additional instructions below in this readme about setting the values in those files.
+
+You will also need the library [Microsoft.Identity.Web](./MS_Identity_Web.md).  
+Follow [this link](./MS_Identity_Web.md) to see how to build the library for use with this sample.
+
 ## Environment
 
 Quick information on environment.
@@ -408,6 +422,120 @@ to
 ```TypeScript
   providers: [TodoListService],
 ```
+
+## ADAL Integration
+
+**NOTES INCOMPLETE HERE** - The notes on ADAL integration are not yet complete (c. late June 2019), though the source can be built and run with the notes here.
+
+**Note:** If you are building your app from scratch (rather than using the [code for this sample from GitHub](https://github.com/bgoodearl/TodoSPASample)), you will need to change the URL for your local application.
+
+For the code in this repository, the URL is `https://localhost:44358`.
+
+I've used the name `TodoSPA_sample_local` when registering in my AAD.
+
+### Auth Settings in Angular app
+
+Added new folders `shared` and `shared\auth` under `ClientApp\src\app`.
+
+Added new file `shared-config.models.ts` in folder `ClientApp\src\app\shared` with the following content:
+```TypeScript
+export interface AuthConfig {
+  authConfigType: string;
+  clientId: string;
+}
+```
+
+Added new file `authconfig.ts` in folder `ClientApp\src\app\shared\auth`:
+```TypeScript
+import { AuthConfig } from "../../../app/shared/shared-config.models";
+
+//*** Important *** The values in this file in .../ClientApp/src/app/shared/auth
+//will be replaced by the contents of a file from .../ClientApp/src/app-alt/shared/auth
+//
+// See readme.md from root of solution for more information
+export const AUTH_CONFIG: AuthConfig = {
+  authConfigType: "empty",
+  clientId: "00000000-0000-0000-0000-000000000000"
+}
+```
+
+### Copying Auth Settings from non-versioned code
+
+**IMPORTANT:** Before building this app, see the notes in [_initialSetup/_initialSetupReadme.md](./_initialSetup/_initialSetupReadme.md) and
+copy files as directed there.
+
+Replace a portion of `ClientApp\angular.json`
+```json
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            }
+          }
+```
+with
+```json
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                },
+                {
+                  "replace": "src/app/shared/auth/authconfig.ts",
+                  "with": "src/app-alt/shared/auth/authconfig-prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            },
+            "dev-local": {
+              "fileReplacements": [
+                {
+                  "replace": "src/app/shared/auth/authconfig.ts",
+                  "with": "src/app-alt/shared/auth/authconfig-dev-local.ts"
+                }
+              ]
+            }
+          }
+```
+
+Add to `scripts` in `package.json`:
+```json
+    "build:devlocal": "ng build --aot=true --configuration=dev-local",
+```
+
+
+### Azure Active Directory Application Registration
+
+Follow the instructions in the Quickstart to register your application.
+
+[Quickstart: Register an application with the Microsoft identity platform](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app)
+
+### Set values in authconfig-dev-local.ts
+
+[If not done yet, copy the files into `TodoSPA\ClientApp\src\app-alt\shared\auth` as described earlier in this readme.]
 
 
 

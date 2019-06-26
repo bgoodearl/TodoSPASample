@@ -14,6 +14,9 @@
 			Added Logout button to menu.<br/>
 			Use login popup.<br/>
 			Tweaked logging for todo-list.<br/>
+			Added notes about Microsoft.Identity.Web and reference to library.<br/>
+			Added authentication setup to Web API in Startup.<br/>
+			Added AzureAd settings in appsettings.json (and actual values in User Secrets).<br/>
 		</td>
     </tr>
     <tr>
