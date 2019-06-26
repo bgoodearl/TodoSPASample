@@ -15,8 +15,8 @@ See [_initialSetup/_initialSetupReadme.md](./_initialSetup/_initialSetupReadme.m
 
 You will see additional instructions below in this readme about setting the values in those files.
 
-You will also need the library [Microsoft.Identity.Web](./MS_Identity_Web.md).  
-Follow [this link](./MS_Identity_Web.md) to see how to build the library for use with this sample.
+You will also need the library [Microsoft.Identity.Web](./_docs/MS_Identity_Web.md).  
+Follow [this link](./_docs/MS_Identity_Web.md) to see how to build the library for use with this sample.
 
 ## Environment
 
