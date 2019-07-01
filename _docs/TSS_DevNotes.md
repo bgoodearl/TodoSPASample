@@ -11,6 +11,9 @@
 		<td>
 			Renamed todoApiRoot to apiRoot in AuthConfig.
 			Added login button to nav menu.<br/>
+			Added Owner and CreationTime to TodoItem.
+			Set Owner when saving TodoItem.
+			Show Owner in todo list.<br/>
 		</td>
     </tr>
     <tr>
