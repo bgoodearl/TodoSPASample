@@ -7,6 +7,13 @@
         <th>Notes</th>
     </tr>
     <tr>
+        <td>7/1/2019</td><td>bg</td>
+		<td>
+			Renamed todoApiRoot to apiRoot in AuthConfig.
+			Added login button to nav menu.<br/>
+		</td>
+    </tr>
+    <tr>
         <td>6/25/2019</td><td>bg</td>
 		<td>
 			Added [Authorize] and User check to TodoController.

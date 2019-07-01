@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Subscription } from "rxjs";
 import { BroadcastService, MsalService } from "@azure/msal-angular";
+import { consentScopes } from "../app.module";
 
 @Component({
   selector: 'app-nav-menu',
@@ -20,6 +21,19 @@ export class NavMenuComponent {
 
   collapse() {
     this.isExpanded = false;
+  }
+
+  login(): void {
+    console.log("login");
+    this.msalService.loginPopup(consentScopes)
+      .then(result => {
+        console.log("Login success " + JSON.stringify(result));
+        let user: any = this.msalService.getUser();
+        this.isLoggedIn = (user != null);
+      })
+      .catch(error => {
+        console.log("login error: " + JSON.stringify(error));
+      });
   }
 
   logout(): void {

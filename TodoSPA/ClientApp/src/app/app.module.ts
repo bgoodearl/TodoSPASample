@@ -23,7 +23,8 @@ export function loggerCallback(logLevel, message, piiEnabled) {
   console.log("client logging - " + message);
 }
 
-export const protectedResourceMap: [string, string[]][] = [[AUTH_CONFIG.todoApiRoot + "/api/todolist", [AUTH_CONFIG.apiAsUserScope]], ['https://graph.microsoft.com/v1.0/me', ['user.read']]];
+export const protectedResourceMap: [string, string[]][] = [[AUTH_CONFIG.apiRoot + "/api/todolist", [AUTH_CONFIG.apiAsUserScope]], ['https://graph.microsoft.com/v1.0/me', ['user.read']]];
+export const consentScopes: string[] = ["user.read", AUTH_CONFIG.apiAsUserScope];
 
 @NgModule({
   declarations: [
@@ -49,7 +50,7 @@ export const protectedResourceMap: [string, string[]][] = [[AUTH_CONFIG.todoApiR
       postLogoutRedirectUri: AUTH_CONFIG.appPostLogoutRedirectUri,
       navigateToLoginRequestUrl: true,
       popUp: true,
-      consentScopes: ["user.read", AUTH_CONFIG.apiAsUserScope],
+      consentScopes: consentScopes,
       unprotectedResources: ["https://www.microsoft.com/en-us/"],
       protectedResourceMap: protectedResourceMap,
       logger: loggerCallback,
@@ -63,4 +64,10 @@ export const protectedResourceMap: [string, string[]][] = [[AUTH_CONFIG.todoApiR
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  static VER: string = "1.02";
+  constructor() {
+    console.log("AppModule constructor v=" + AppModule.VER);
+    console.log("protectedResourceMap: " + JSON.stringify(protectedResourceMap));
+  }
+}

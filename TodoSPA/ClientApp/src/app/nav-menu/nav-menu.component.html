@@ -20,6 +20,9 @@
           <li class="nav-item" [routerLinkActive]='["link-active"]'>
             <a class="nav-link text-dark" [routerLink]='["/todo-list"]'>Todo List</a>
           </li>
+          <li *ngIf="!isLoggedIn">
+            <button (click)="login()">Login</button>
+          </li>
           <li *ngIf="isLoggedIn">
             <button (click)="logout()">Logout</button>
           </li>

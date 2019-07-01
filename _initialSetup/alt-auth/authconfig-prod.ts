@@ -10,5 +10,5 @@ export const AUTH_CONFIG: AuthConfig = {
   authority: "https://login.microsoftonline.com/_my_tenant_.onmicrosoft.com",
   cacheLocation: "localStorage",
   clientId: "00000000-0000-0000-0000-000000000000",
-  todoApiRoot: "https://localhost:44300"
+  apiRoot: "https://localhost:44300"
 }

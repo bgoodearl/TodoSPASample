@@ -6,5 +6,5 @@ export interface AuthConfig {
   authority: string;
   cacheLocation: string;
   clientId: string;
-  todoApiRoot: string;
+  apiRoot: string;
 }
