@@ -9,7 +9,7 @@ import { consentScopes } from "../app.module";
   styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent {
-  static VER: string = "1.01";
+  static VER: string = "1.02";
   isExpanded: boolean = false;
   isLoggedIn = false;
   private loginFailedSubscription: Subscription = null;
@@ -55,10 +55,10 @@ export class NavMenuComponent {
   }
 
   ngOnInit() {
-    console.log("navMenu OnInit v=" + NavMenuComponent.VER + " - user:");
     let user: any = this.msalService.getUser();
     this.isLoggedIn = (user != null);
-    if (this.isLoggedIn) { console.log(user); }
+    console.log("navMenu OnInit v=" + NavMenuComponent.VER + " - user logged in: " + this.isLoggedIn);
+    //if (this.isLoggedIn) { console.log(user); }
     this.loginFailedSubscription = this.broadcastService.subscribe("msal:loginFailure", (payload) => {
       console.log("navMenu login failed");
       this.isLoggedIn = false;

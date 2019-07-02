@@ -7,6 +7,13 @@
         <th>Notes</th>
     </tr>
     <tr>
+        <td>7/2/2019</td><td>bg</td>
+		<td>
+			Updated error reporting in TodoListComponent.<br/>
+			Tweaked logging in NavMenuComponent.<br/>
+		</td>
+    </tr>
+    <tr>
         <td>7/1/2019</td><td>bg</td>
 		<td>
 			Renamed todoApiRoot to apiRoot in AuthConfig.
