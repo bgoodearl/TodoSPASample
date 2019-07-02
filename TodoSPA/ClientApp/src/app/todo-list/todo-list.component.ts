@@ -29,21 +29,30 @@ export class TodoListComponent implements OnInit, OnDestroy  {
 
     this.populate();
 
+    let errorCount: number = 0;
     this.tokenFailureSubscription = this.broadcastService.subscribe("msal:acquireTokenFailure", (payload) => {
-      console.log("todoList acquire token failure " + JSON.stringify(payload));
-      if (payload.indexOf("consent_required") !== -1 || payload.indexOf("interaction_required") != -1) {
+      errorCount++;
+      console.log("todoList acquire token failure (" + errorCount + "), " + JSON.stringify(payload));
+      //if (payload.indexOf("consent_required") !== -1 || payload.indexOf("interaction_required") != -1) {
+      if (errorCount < 3) {
         let scopeUri: string = AUTH_CONFIG.apiAsUserScope;
-        this.msalService.acquireTokenPopup([scopeUri]).then( (token) => {
-          this.todoListService.getItems().subscribe( (results) => {
-            this.error = '';
-            this.todoList = results;
-            this.loadingMessage = "";
-          },  (err) => {
-            this.error = err;
-            this.loadingMessage = "";
+        let user: any = this.msalService.getUser();
+        if (user === null) {
+          this.msalService.acquireTokenPopup([scopeUri]).then((token) => {
+            this.todoListService.getItems().subscribe((results) => {
+              this.error = '';
+              this.todoList = results;
+              this.loadingMessage = "";
+            }, (err) => {
+              this.error = err;
+              this.loadingMessage = "";
+            });
+          }, (error) => {
+            console.log("acquireTokenPopup error: " + JSON.stringify(error));
           });
-        },  (error) => {
-        });
+        } else {
+          console.log("have user...");
+        }
       }
     });
     this.tokenSuccessSubscription = this.broadcastService.subscribe("msal:acquireTokenSuccess", (payload) => {

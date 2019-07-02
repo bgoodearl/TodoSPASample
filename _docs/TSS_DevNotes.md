@@ -7,6 +7,14 @@
         <th>Notes</th>
     </tr>
     <tr>
+        <td>7/2/2019</td><td>bg</td>
+		<td>
+			Branch: weather_scope - added property apiWeatherReadScope to AuthConfig in Angular app.
+			Added additional error handling in TodoListComponent.
+			Changed logging in nav-menu.component.<br/>
+		</td>
+    </tr>
+    <tr>
         <td>7/1/2019</td><td>bg</td>
 		<td>
 			Renamed todoApiRoot to apiRoot in AuthConfig.

@@ -6,6 +6,7 @@ import { AuthConfig } from "../../../app/shared/shared-config.models";
 // See readme.md from root of solution for more information
 export const AUTH_CONFIG: AuthConfig = {
   apiAsUserScope: "api://00000000-0000-0000-0000-000000000000/access_as_user",
+  apiWeatherReadScope: "api://00000000-0000-0000-0000-000000000000/weather_read",
   appPostLogoutRedirectUri: "https://localhost:44300",
   appRedirectUri: "https://localhost:44300",
   authConfigType: "empty",

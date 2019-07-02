@@ -1,5 +1,6 @@
 export interface AuthConfig {
   apiAsUserScope: string;
+  apiWeatherReadScope: string;
   appPostLogoutRedirectUri: string;
   appRedirectUri: string;
   authConfigType: string;
