@@ -7,6 +7,12 @@
         <th>Notes</th>
     </tr>
     <tr>
+        <td>7/4/2019</td><td>bg</td>
+		<td>
+			Added apiWeatherReadScope to protectedResourceMap and consentScopes in app.module.<br/>
+		</td>
+    </tr>
+    <tr>
         <td>7/2/2019</td><td>bg</td>
 		<td>
 			Branch: weather_scope - added property apiWeatherReadScope to AuthConfig in Angular app.

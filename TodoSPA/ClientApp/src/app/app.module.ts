@@ -22,9 +22,9 @@ import { AUTH_CONFIG } from "./shared/auth/authconfig";
 export function loggerCallback(logLevel, message, piiEnabled) {
   console.log("client logging - " + message);
 }
-//[AUTH_CONFIG.apiRoot + "/api/SampleData/WeatherForecasts", [AUTH_CONFIG.apiWeatherReadScope]], 
-export const protectedResourceMap: [string, string[]][] = [[AUTH_CONFIG.apiRoot + "/api/todo", [AUTH_CONFIG.apiAsUserScope]], ['https://graph.microsoft.com/v1.0/me', ['user.read']]];
-export const consentScopes: string[] = ["user.read", AUTH_CONFIG.apiAsUserScope]; //, AUTH_CONFIG.apiWeatherReadScope];
+
+export const protectedResourceMap: [string, string[]][] = [[AUTH_CONFIG.apiRoot + "/api/todo", [AUTH_CONFIG.apiAsUserScope]], [AUTH_CONFIG.apiRoot + "/api/SampleData/WeatherForecasts", [AUTH_CONFIG.apiWeatherReadScope]], ['https://graph.microsoft.com/v1.0/me', ['user.read']]];
+export const consentScopes: string[] = ["user.read", AUTH_CONFIG.apiAsUserScope, AUTH_CONFIG.apiWeatherReadScope];
 
 @NgModule({
   declarations: [
@@ -65,7 +65,7 @@ export const consentScopes: string[] = ["user.read", AUTH_CONFIG.apiAsUserScope]
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  static VER: string = "1.04";
+  static VER: string = "1.05";
   constructor() {
     console.log("AppModule constructor v=" + AppModule.VER);
     console.log("protectedResourceMap: " + JSON.stringify(protectedResourceMap));
