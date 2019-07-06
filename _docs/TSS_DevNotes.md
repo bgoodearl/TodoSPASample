@@ -7,6 +7,12 @@
         <th>Notes</th>
     </tr>
     <tr>
+        <td>7/6/2019</td><td>bg</td>
+		<td>
+			Added license.<br/>
+		</td>
+    </tr>
+    <tr>
         <td>7/4/2019</td><td>bg</td>
 		<td>
 			Added apiWeatherReadScope to protectedResourceMap and consentScopes in app.module.<br/>
