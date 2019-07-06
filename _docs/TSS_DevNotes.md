@@ -7,6 +7,14 @@
         <th>Notes</th>
     </tr>
     <tr>
+        <td>7/6/2019</td><td>bg</td>
+		<td>
+			Added license.<br/>
+			Picked up some changes from weather_scope branch.
+			TodoListService - use BASE_URL to set up URL for api/todo.<br/>
+		</td>
+    </tr>
+    <tr>
         <td>7/2/2019</td><td>bg</td>
 		<td>
 			Updated error reporting in TodoListComponent.<br/>
