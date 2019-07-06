@@ -10,6 +10,7 @@
         <td>7/4/2019</td><td>bg</td>
 		<td>
 			Added apiWeatherReadScope to protectedResourceMap and consentScopes in app.module.<br/>
+			TodoListService - use BASE_URL to set up URL for api/todo.<br/>
 		</td>
     </tr>
     <tr>
